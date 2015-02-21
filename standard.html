@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+
+        <title>Mobile Std. Angular UI Demo</title>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
+
+        <link rel="stylesheet" href="../mobilesiteos/css/font_awesome.uc.css" />
+        <link rel="stylesheet" href="../mobilesiteos/ng/mobile/css/hover.uc.css" />
+        <link rel="stylesheet" href="../mobilesiteos/ng/mobile/css/base.uc.css" />
+        <link rel="stylesheet" href="../mobilesiteos/ng/mobile/css/desktop.uc.css" />
+        <link rel="stylesheet" href="./css/demo.css" />
+
+        <!-- MobileSiteOS uses these, so we included them (for evaluation/testing) -->
+        <script src="../mobilesiteos/msos/base.uc.js"></script>
+        <script src="../mobilesiteos/modernizr/v283.uc.js"></script>
+        <script src="../mobilesiteos/jquery/v211.uc.js"></script>
+        <script src="../mobilesiteos/underscore/v170.uc.js"></script>
+        <script src="../mobilesiteos/msos/core.uc.js"></script>
+
+        <script src="../mobilesiteos/ng/v1310.uc.js"></script>
+        <script src="../mobilesiteos/ng/route/v139.uc.js"></script>
+        <script src="../mobilesiteos/ng/mobile/v103_w_ui.uc.js"></script>
+        <!-- Required to use $touch, $swipe, $drag and $translate services -->
+        <script src="../mobilesiteos/ng/mobile/gestures/v103.uc.js"></script>
+        <script src="./demo_std.js"></script>
+    </head>
+
+    <body id="std_version" data-ng-app="MobileAngularUiExamples" data-ng-controller="MainController">
+        <!-- Sidebars -->
+        <div data-ng-include="'tmpl/sidebar.html'" data-ui-track-as-search-param='true' class="sidebar sidebar-left"></div>
+        <div data-ng-include="'tmpl/sidebarRight.html'" class="sidebar sidebar-right"></div>
+        <div class="app" data-ng-swipe-right='Ui.turnOn("uiSidebarLeft")' data-ng-swipe-left='Ui.turnOff("uiSidebarLeft")'>
+            <!-- Navbars -->
+            <div class="navbar navbar-app navbar-absolute-top">
+                <div class="navbar-brand navbar-brand-center" data-ui-yield-to="title">Mobile Angular UI</div>
+                <div class="btn-group pull-left">
+                    <div data-ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
+                        <i class="fa fa-bars"></i>Menu</div>
+                </div>
+                <div class="btn-group pull-right" data-ui-yield-to="navbarAction">
+                    <div data-ui-toggle="uiSidebarRight" class="btn">
+                        <i class="fa fa-comment"></i>Chat</div>
+                </div>
+            </div>
+            <div class="navbar navbar-app navbar-absolute-bottom">
+                <div class="btn-group justified">
+                    <a href="/docs" class="btn btn-navbar"><i class="fa fa-home fa-navbar"></i> Docs</a>
+                    <a href="https://github.com/mcasimir/mobile-angular-ui" class="btn btn-navbar"><i class="fa fa-github fa-navbar"></i> Sources</a>
+                    <a href="https://github.com/mcasimir/mobile-angular-ui/issues" class="btn btn-navbar"><i class="fa fa-exclamation-circle fa-navbar"></i> Issues</a>
+                </div>
+            </div>
+            <!-- App Body -->
+            <div class="app-body" data-ng-class="{loading: loading}">
+                <div data-ng-show="loading" class="app-content-loading">
+                    <i class="fa fa-spinner fa-spin loading-spinner"></i>
+                </div>
+                <div class="app-content">
+                    <div data-ng-view></div>
+                </div>
+            </div>
+        </div>
+        <!-- ~ .app -->
+        <div data-ui-yield-to="modals"></div>
+    </body>
+</html>
