@@ -22,14 +22,14 @@
         <script src="../mobilesiteos/msos/core.uc.js"></script>
 
         <script src="../mobilesiteos/ng/v147_msos.uc.js"></script>
-        <script src="../mobilesiteos/ng/route/v139_msos.uc.js"></script>
-        <script src="../mobilesiteos/ng/mobile/v103_w_ui.uc.js"></script>
+        <script src="../mobilesiteos/ng/route/v150_msos.uc.js"></script>
+        <script src="../mobilesiteos/ng/mobile/v120b_w_ui.uc.js"></script>
         <!-- Required to use $touch, $swipe, $drag and $translate services -->
-        <script src="../mobilesiteos/ng/mobile/gestures/v103.uc.js"></script>
+        <script src="../mobilesiteos/ng/mobile/gestures/v120b.uc.js"></script>
         <script src="./demo_msos.js"></script>
 
         <style>
-            /* Std AngularJS CSS: Load in page so cloaking start immediately */
+            /* Std AngularJS CSS: Load in page so cloaking starts immediately */
             [ng\:cloak],
             [ng-cloak],
             [data-ng-cloak],
@@ -56,11 +56,11 @@
                 position:absolute;
             }
         </style>
-
     </head>
+
     <body id="msos_version" class="data-ng-cloak" data-ng-controller="MainController">
         <!-- Sidebars -->
-        <div data-ng-include="'tmpl/sidebar.html'" data-ui-track-as-search-param='true' class="sidebar sidebar-left"></div>
+        <div data-ng-include="'tmpl/sidebarLeft.html'" data-ui-track-as-search-param='true' class="sidebar sidebar-left"></div>
         <div data-ng-include="'tmpl/sidebarRight.html'" class="sidebar sidebar-right"></div>
         <div class="app" data-ng-swipe-right='Ui.turnOn("uiSidebarLeft")' data-ng-swipe-left='Ui.turnOff("uiSidebarLeft")'>
             <!-- Navbars -->
