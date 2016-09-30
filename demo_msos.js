@@ -3,7 +3,7 @@
 msos.onload_func_done.push(
     function () {
         "use strict";
-    
+
         var temp_sd = 'demo_msos.js -> ',
             app = angular.module(
                 'MobileAngularUiExamples',
@@ -13,13 +13,13 @@ msos.onload_func_done.push(
         msos.console.debug(temp_sd + ' -> start.');
 
         app.run(
-            function ($transform) {
+            ['$transform', function ($transform) {
                 window.$transform = $transform;
-            }
+            }]
         );
-    
+
         app.config(
-            function ($routeProvider) {
+            ['$routeProvider', function ($routeProvider) {
                 $routeProvider.when('/', {
                     templateUrl: 'tmpl/home.html',
                     reloadOnSearch: false
@@ -72,9 +72,9 @@ msos.onload_func_done.push(
                     templateUrl: 'tmpl/carousel.html',
                     reloadOnSearch: false
                 });
-            }
+            }]
         );
-    
+
         app.directive('toucharea', ['$touch', function ($touch) {
             // Runs during compile
             return {
@@ -86,17 +86,17 @@ msos.onload_func_done.push(
                             $scope.touch = touch;
                             $scope.$apply();
                         },
-    
+
                         cancel: function (touch) {
                             $scope.touch = touch;
                             $scope.$apply();
                         },
-    
+
                         move: function (touch) {
                             $scope.touch = touch;
                             $scope.$apply();
                         },
-    
+
                         end: function (touch) {
                             $scope.touch = touch;
                             $scope.$apply();
@@ -105,7 +105,7 @@ msos.onload_func_done.push(
                 }
             };
         }]);
-    
+
         app.directive('dragToDismiss', function ($drag, $parse, $timeout) {
             return {
                 restrict: 'A',
@@ -113,7 +113,7 @@ msos.onload_func_done.push(
                     var dismissFn = $parse(attrs.dragToDismiss);
                     return function (scope, elem) {
                         var dismiss = false;
-    
+
                         $drag.bind(elem, {
                             transform: $drag.TRANSLATE_RIGHT,
                             move: function (drag) {
@@ -145,7 +145,7 @@ msos.onload_func_done.push(
                 }
             };
         });
-    
+
         app.directive('carousel', function () {
             return {
                 restrict: 'C',
@@ -153,7 +153,7 @@ msos.onload_func_done.push(
                 controller: function () {
                     this.itemCount = 0;
                     this.activeItem = null;
-    
+
                     this.addItem = function () {
                         var newId = this.itemCount++;
                         this.activeItem = this.itemCount === 1 ? newId : this.activeItem;
@@ -172,8 +172,10 @@ msos.onload_func_done.push(
                 }
             };
         });
-    
-        app.directive('carouselItem', function ($drag) {
+
+        app.directive(
+            'carouselItem',
+            ['$drag', function ($drag) {
             return {
                 restrict: 'C',
                 require: '^carousel',
@@ -183,7 +185,7 @@ msos.onload_func_done.push(
                 link: function (scope, elem, attrs, carousel) {
                     scope.carousel = carousel;
                     var id = carousel.addItem();
-    
+
                     var zIndex = function () {
                             var res = 0;
                             if (id === carousel.activeItem) {
@@ -195,13 +197,13 @@ msos.onload_func_done.push(
                             }
                             return res;
                         };
-    
+
                     scope.$watch(function () {
                         return carousel.activeItem;
                     }, function () {
                         elem[0].style.zIndex = zIndex();
                     });
-    
+
                     $drag.bind(elem, {
                         //
                         // This is an example of custom transform function
@@ -211,7 +213,7 @@ msos.onload_func_done.push(
                             // use translate both as basis for the new transform:
                             // 
                             var t = $drag.TRANSLATE_BOTH(element, transform, touch);
-    
+
                             //
                             // Add rotation:
                             //
@@ -246,9 +248,11 @@ msos.onload_func_done.push(
                     });
                 }
             };
-        });
-    
-        app.directive('dragMeTo', ['$drag', function ($drag) {
+        }]);
+
+        app.directive(
+            'dragMeTo',
+            ['$drag', function ($drag) {
             return {
                 controller: function ($scope, $element) {
                     $drag.bind($element, {
@@ -267,48 +271,50 @@ msos.onload_func_done.push(
                 }
             };
         }]);
-    
+
         //
         // For this trivial demo we have just a unique MainController 
         // for everything
         //
-        app.controller('MainController', function ($rootScope, $scope) {
-    
+        app.controller(
+            'MainController',
+            ['$rootScope', '$scope', function ($rootScope, $scope) {
+
             $scope.swiped = function (direction) {
                 alert('Swiped ' + direction);
             };
-    
+
             // User agent displayed in home page
             $scope.userAgent = navigator.userAgent;
-    
+
             // Needed for the loading screen
             $rootScope.$on('$routeChangeStart', function () {
                 $rootScope.loading = true;
             });
-    
+
             $rootScope.$on('$routeChangeSuccess', function () {
                 $rootScope.loading = false;
             });
-    
+
             // Fake text i used here and there.
             $scope.lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel explicabo, aliquid eaque soluta nihil eligendi adipisci error, illum corrupti nam fuga omnis quod quaerat mollitia expedita impedit dolores ipsam. Obcaecati.';
-    
+
             // 
             // 'Scroll' screen
             // 
             var scrollItems = [];
-    
+
             for (var i = 1; i <= 100; i++) {
                 scrollItems.push('Item ' + i);
             }
-    
+
             $scope.scrollItems = scrollItems;
-    
+
             $scope.bottomReached = function () {
                 /* global alert: false; */
                 alert('Congrats you scrolled to the end of the list!');
             };
-    
+
             // 
             // Right Sidebar
             // 
@@ -388,39 +394,39 @@ msos.onload_func_done.push(
                 name: 'Ebony Rice',
                 online: false
             }];
-    
+
             //
             // 'Forms' screen
             //  
             $scope.rememberMe = true;
             $scope.email = 'me@example.com';
-    
+
             $scope.login = function () {
                 alert('You submitted the login form');
             };
-    
+
             // 
             // 'Drag' screen
             // 
             $scope.notices = [];
-    
+
             for (var j = 0; j < 10; j++) {
                 $scope.notices.push({
                     icon: 'envelope',
                     message: 'Notice ' + (j + 1)
                 });
             }
-    
+
             $scope.deleteNotice = function (notice) {
                 var index = $scope.notices.indexOf(notice);
                 if (index > -1) {
                     $scope.notices.splice(index, 1);
                 }
             };
-        });
-    
+        }]);
+
         angular.bootstrap('body', ['MobileAngularUiExamples']);
-    
+
         msos.console.debug(temp_sd + 'done!');
     }
 );
